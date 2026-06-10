@@ -1,0 +1,181 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{background:#100818;border-radius:18px;overflow:hidden;min-height:700px;position:relative;display:flex;flex-direction:column;align-items:center;padding:0 1.5rem 3rem}
+canvas#stars{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.float-el{position:absolute;pointer-events:none;animation:floaty linear infinite}
+@keyframes floaty{0%{transform:translateY(-30px) rotate(0deg);opacity:0}10%{opacity:.9}85%{opacity:.5}100%{transform:translateY(800px) rotate(280deg);opacity:0}}
+.divider{width:180px;height:1px;background:linear-gradient(90deg,transparent,#6b1a3a,transparent);margin:1.2rem auto}
+.crown{font-size:2.8rem;margin-top:2.5rem;margin-bottom:.6rem;animation:pulse 2.2s ease-in-out infinite;display:block;position:relative;z-index:2}
+@keyframes pulse{0%,100%{transform:scale(1)}40%{transform:scale(1.15)}70%{transform:scale(1.05)}}
+h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:600;color:#e8b4c8;letter-spacing:.02em;position:relative;z-index:2;text-align:center}
+.tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:#7a4060;margin:.5rem 0 1.5rem;position:relative;z-index:2;text-align:center}
+.rose-row{display:flex;gap:.7rem;justify-content:center;font-size:1.5rem;margin-bottom:1.4rem;position:relative;z-index:2}
+.music-player{background:rgba(25,4,18,.9);border:1px solid #5a1a40;border-radius:16px;padding:1.2rem 1.6rem;max-width:380px;width:100%;position:relative;z-index:2;margin-bottom:1.4rem;display:flex;align-items:center;gap:1rem}
+.player-thumb{width:52px;height:52px;border-radius:10px;background:#2a0818;border:1px solid #7a2050;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
+.player-info{flex:1;min-width:0}
+.player-title{font-family:'Playfair Display',serif;font-size:.95rem;color:#f0c0d8;font-weight:600;margin-bottom:.2rem}
+.player-artist{font-family:'DM Sans',sans-serif;font-size:.78rem;color:#7a4060;margin-bottom:.6rem}
+.player-controls{display:flex;align-items:center;gap:.6rem}
+.play-btn{width:32px;height:32px;border-radius:50%;background:#7a1a45;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:background .2s,transform .15s;flex-shrink:0}
+.play-btn:hover{background:#a02060;transform:scale(1.08)}
+.progress-wrap{flex:1;height:3px;background:#2a0818;border-radius:3px;position:relative;cursor:pointer;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,#c04080,#8020a0);border-radius:3px;width:0%;transition:width .3s linear}
+.time-label{font-family:'DM Sans',sans-serif;font-size:.7rem;color:#6a3050;flex-shrink:0;min-width:28px}
+.card-main{background:rgba(30,6,22,.85);border:1px solid #4a1535;border-radius:18px;padding:1.8rem 2rem;max-width:430px;width:100%;position:relative;z-index:2;margin-bottom:1.4rem}
+.card-label{font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.18em;color:#6b2a48;text-transform:uppercase;margin-bottom:1rem}
+.msg{font-family:'Playfair Display',serif;font-size:1.05rem;line-height:2;color:#e8ccd6}
+.msg .name{font-weight:600;color:#e07090}
+.msg .sweet{color:#c890b0}
+.sign{font-family:'Playfair Display',serif;font-style:italic;font-size:.9rem;color:#8a3560;margin-top:1.2rem;border-top:1px solid #2a0e1e;padding-top:1rem}
+.badges{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:1.4rem;position:relative;z-index:2}
+.badge{background:rgba(80,10,45,.6);border:1px solid #5a1a3a;border-radius:50px;padding:.32rem .9rem;font-family:'DM Sans',sans-serif;font-size:.78rem;color:#d080a0}
+.promise-section{background:rgba(20,4,16,.8);border:1px solid #3a0e28;border-radius:14px;padding:1.3rem 1.6rem;max-width:430px;width:100%;position:relative;z-index:2;margin-bottom:1.4rem}
+.promise-title{font-family:'Playfair Display',serif;font-size:.95rem;color:#c06080;margin-bottom:.9rem;text-align:center}
+.promise-item{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.75rem;font-family:'DM Sans',sans-serif;font-size:.86rem;color:#c0a0b0;line-height:1.5}
+.promise-dot{font-size:.95rem;flex-shrink:0}
+.btn-row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:2;margin-top:.5rem}
+.btn{background:rgba(100,15,55,.5);border:1px solid #7a2050;border-radius:50px;padding:.55rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:.85rem;color:#e8a0c0;cursor:pointer;transition:background .2s,transform .15s}
+.btn:hover{background:rgba(150,20,75,.6);transform:scale(1.05)}
+.btn:active{transform:scale(.97)}
+.footer{font-family:'DM Sans',sans-serif;font-size:.76rem;color:#4a1a30;margin-top:1.6rem;position:relative;z-index:2;text-align:center}
+</style>
+
+<div class="wrap" id="wrap">
+<canvas id="stars"></canvas>
+
+<span class="crown">🖤</span>
+<h1>jan e jahan,<br>I'm so sorry 🌹</h1>
+<p class="tagline">a confession, written under a thousand stars ✨</p>
+<div class="divider"></div>
+
+<div class="rose-row">
+  <span>🌹</span><span>🕯️</span><span>💜</span><span>🕯️</span><span>🌹</span>
+</div>
+
+
+
+<div class="card-main">
+  <p class="card-label">✦ a letter from the heart ✦</p>
+  <p class="msg">
+    Sorry <span class="name">jan e jahan</span> 🌹<br>
+    <span class="sweet">mri rasmalai,</span><br>
+    <span class="sweet">mri khushi ki barfi,</span><br>
+    <span class="sweet">mri jane jahan —</span><br><br>
+    I love you so much it scares me sometimes 💜<br>
+    And I hate that I ever gave you a reason<br>to feel anything but that.<br><br>
+    I Love you.............. 🥀<br>
+    <span style="color:#a06080;font-size:1.1rem">hehehe 🙈</span>
+  </p>
+  <p class="sign">— yours, completely &amp; always 🖤</p>
+</div>
+
+<div class="badges">
+  <span class="badge">🌹 mri rasmalai</span>
+  <span class="badge">💜 mri khushi ki barfi</span>
+  <span class="badge">✨ jan e jahan</span>
+</div>
+
+<div class="promise-section">
+  <p class="promise-title">🕯️ promises, sealed in the dark 🕯️</p>
+  <div class="promise-item"><span class="promise-dot">🌹</span><span>I promise to be more careful with your heart.</span></div>
+  <div class="promise-item"><span class="promise-dot">💜</span><span>I promise that your smile will always be my favourite thing in the world.</span></div>
+  <div class="promise-item"><span class="promise-dot">🖤</span><span>I promise you are, and will always be, my jan e jahan.</span></div>
+  <div class="promise-item"><span class="promise-dot">✨</span><span>And I promise — hehehe — that I mean every single word 🙈</span></div>
+</div>
+
+
+<p class="footer">made at midnight, with love, guilt & too many roses 🥀</p>
+</div>
+
+<script>
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('wrap');
+
+function resize(){
+  canvas.width = wrap.offsetWidth;
+  canvas.height = wrap.offsetHeight;
+  drawStars();
+}
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<130;i++){
+    const x=Math.random()*canvas.width, y=Math.random()*canvas.height, r=Math.random()*1.2+.2;
+    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${180+Math.random()*60},${80+Math.random()*60},${150+Math.random()*60},${.15+Math.random()*.5})`;
+    ctx.fill();
+  }
+}
+resize(); setTimeout(resize,400);
+
+const floaters=['🌹','💜','🥀','✨','🖤','💫','🌸','🕯️'];
+for(let i=0;i<16;i++){
+  const el=document.createElement('div');
+  el.className='float-el';
+  el.textContent=floaters[Math.floor(Math.random()*floaters.length)];
+  el.style.left=Math.random()*100+'%';
+  el.style.fontSize=(.8+Math.random()*.9)+'rem';
+  el.style.animationDuration=(7+Math.random()*10)+'s';
+  el.style.animationDelay=(Math.random()*12)+'s';
+  el.style.opacity='0';
+  wrap.appendChild(el);
+}
+
+let yt, playing=false, ticker=null, elapsed=0, duration=30;
+const tag=document.createElement('script');
+tag.src='https://www.youtube.com/iframe_api';
+document.head.appendChild(tag);
+
+window.onYouTubeIframeAPIReady=function(){
+  yt=new YT.Player('ytframe',{
+    videoId:'hhdSyBHuI88',
+    playerVars:{autoplay:0,controls:0,start:0,end:30,modestbranding:1,rel:0},
+    events:{onStateChange:onPlayerState}
+  });
+};
+
+function onPlayerState(e){
+  if(e.data===YT.PlayerState.ENDED||e.data===YT.PlayerState.PAUSED){
+    stopTick();
+    if(e.data===YT.PlayerState.ENDED){elapsed=0;updateBar();document.getElementById('playBtn').textContent='▶';playing=false;}
+  }
+}
+
+function togglePlay(){
+  if(!yt||typeof yt.playVideo!=='function') return;
+  if(!playing){yt.playVideo();playing=true;document.getElementById('playBtn').textContent='⏸';startTick();}
+  else{yt.pauseVideo();playing=false;document.getElementById('playBtn').textContent='▶';stopTick();}
+}
+
+function startTick(){
+  ticker=setInterval(()=>{
+    if(yt&&typeof yt.getCurrentTime==='function'){
+      elapsed=Math.min(yt.getCurrentTime(),duration);
+      updateBar();
+      if(elapsed>=duration){stopTick();playing=false;document.getElementById('playBtn').textContent='▶';}
+    }
+  },300);
+}
+function stopTick(){clearInterval(ticker);}
+function updateBar(){
+  const pct=Math.min((elapsed/duration)*100,100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  const rem=Math.max(0,Math.round(duration-elapsed));
+  document.getElementById('timeLabel').textContent='0:'+String(rem).padStart(2,'0');
+}
+function seekAudio(e){
+  if(!yt||typeof yt.seekTo!=='function') return;
+  const rect=document.getElementById('progressWrap').getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  const t=Math.round(pct*duration);
+  elapsed=t; yt.seekTo(t,true); updateBar();
+}
+
+const frame=document.createElement('iframe');
+frame.id='ytframe';
+frame.style.cssText='position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;top:0;left:0';
+frame.allow='autoplay';
+document.getElementById('wrap').appendChild(frame);
+</script>
