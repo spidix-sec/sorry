@@ -1,181 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>jan e jahan · a confession under the stars</title>
+    <style>
+        /* --- base reset & fonts --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-.wrap{background:#100818;border-radius:18px;overflow:hidden;min-height:700px;position:relative;display:flex;flex-direction:column;align-items:center;padding:0 1.5rem 3rem}
-canvas#stars{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
-.float-el{position:absolute;pointer-events:none;animation:floaty linear infinite}
-@keyframes floaty{0%{transform:translateY(-30px) rotate(0deg);opacity:0}10%{opacity:.9}85%{opacity:.5}100%{transform:translateY(800px) rotate(280deg);opacity:0}}
-.divider{width:180px;height:1px;background:linear-gradient(90deg,transparent,#6b1a3a,transparent);margin:1.2rem auto}
-.crown{font-size:2.8rem;margin-top:2.5rem;margin-bottom:.6rem;animation:pulse 2.2s ease-in-out infinite;display:block;position:relative;z-index:2}
-@keyframes pulse{0%,100%{transform:scale(1)}40%{transform:scale(1.15)}70%{transform:scale(1.05)}}
-h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:600;color:#e8b4c8;letter-spacing:.02em;position:relative;z-index:2;text-align:center}
-.tagline{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:#7a4060;margin:.5rem 0 1.5rem;position:relative;z-index:2;text-align:center}
-.rose-row{display:flex;gap:.7rem;justify-content:center;font-size:1.5rem;margin-bottom:1.4rem;position:relative;z-index:2}
-.music-player{background:rgba(25,4,18,.9);border:1px solid #5a1a40;border-radius:16px;padding:1.2rem 1.6rem;max-width:380px;width:100%;position:relative;z-index:2;margin-bottom:1.4rem;display:flex;align-items:center;gap:1rem}
-.player-thumb{width:52px;height:52px;border-radius:10px;background:#2a0818;border:1px solid #7a2050;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
-.player-info{flex:1;min-width:0}
-.player-title{font-family:'Playfair Display',serif;font-size:.95rem;color:#f0c0d8;font-weight:600;margin-bottom:.2rem}
-.player-artist{font-family:'DM Sans',sans-serif;font-size:.78rem;color:#7a4060;margin-bottom:.6rem}
-.player-controls{display:flex;align-items:center;gap:.6rem}
-.play-btn{width:32px;height:32px;border-radius:50%;background:#7a1a45;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.9rem;transition:background .2s,transform .15s;flex-shrink:0}
-.play-btn:hover{background:#a02060;transform:scale(1.08)}
-.progress-wrap{flex:1;height:3px;background:#2a0818;border-radius:3px;position:relative;cursor:pointer;overflow:hidden}
-.progress-bar{height:100%;background:linear-gradient(90deg,#c04080,#8020a0);border-radius:3px;width:0%;transition:width .3s linear}
-.time-label{font-family:'DM Sans',sans-serif;font-size:.7rem;color:#6a3050;flex-shrink:0;min-width:28px}
-.card-main{background:rgba(30,6,22,.85);border:1px solid #4a1535;border-radius:18px;padding:1.8rem 2rem;max-width:430px;width:100%;position:relative;z-index:2;margin-bottom:1.4rem}
-.card-label{font-family:'DM Sans',sans-serif;font-size:.7rem;letter-spacing:.18em;color:#6b2a48;text-transform:uppercase;margin-bottom:1rem}
-.msg{font-family:'Playfair Display',serif;font-size:1.05rem;line-height:2;color:#e8ccd6}
-.msg .name{font-weight:600;color:#e07090}
-.msg .sweet{color:#c890b0}
-.sign{font-family:'Playfair Display',serif;font-style:italic;font-size:.9rem;color:#8a3560;margin-top:1.2rem;border-top:1px solid #2a0e1e;padding-top:1rem}
-.badges{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:1.4rem;position:relative;z-index:2}
-.badge{background:rgba(80,10,45,.6);border:1px solid #5a1a3a;border-radius:50px;padding:.32rem .9rem;font-family:'DM Sans',sans-serif;font-size:.78rem;color:#d080a0}
-.promise-section{background:rgba(20,4,16,.8);border:1px solid #3a0e28;border-radius:14px;padding:1.3rem 1.6rem;max-width:430px;width:100%;position:relative;z-index:2;margin-bottom:1.4rem}
-.promise-title{font-family:'Playfair Display',serif;font-size:.95rem;color:#c06080;margin-bottom:.9rem;text-align:center}
-.promise-item{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.75rem;font-family:'DM Sans',sans-serif;font-size:.86rem;color:#c0a0b0;line-height:1.5}
-.promise-dot{font-size:.95rem;flex-shrink:0}
-.btn-row{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:2;margin-top:.5rem}
-.btn{background:rgba(100,15,55,.5);border:1px solid #7a2050;border-radius:50px;padding:.55rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:.85rem;color:#e8a0c0;cursor:pointer;transition:background .2s,transform .15s}
-.btn:hover{background:rgba(150,20,75,.6);transform:scale(1.05)}
-.btn:active{transform:scale(.97)}
-.footer{font-family:'DM Sans',sans-serif;font-size:.76rem;color:#4a1a30;margin-top:1.6rem;position:relative;z-index:2;text-align:center}
-</style>
+        body {
+            background: #0a0410;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 12px;
+            font-family: 'DM Sans', sans-serif;
+        }
 
+        /* main container — fully responsive, width adapts, uses max-width for large screens */
+        .wrap {
+            background: #100818;
+            border-radius: 28px;
+            overflow: hidden;
+            min-height: 700px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.2rem 2.5rem;
+            width: 100%;
+            max-width: 550px;
+            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(106, 26, 58, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        /* responsive padding adjustments */
+        @media (max-width: 550px) {
+            .wrap {
+                padding: 0 1rem 2rem;
+                border-radius: 24px;
+            }
+            .card-main {
+                padding: 1.5rem 1.3rem;
+            }
+            .promise-section {
+                padding: 1.2rem 1.3rem;
+            }
+            .music-player {
+                padding: 0.9rem 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .msg {
+                font-size: 0.95rem;
+                line-height: 1.8;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .wrap {
+                padding: 0 0.8rem 1.8rem;
+            }
+            .crown {
+                font-size: 2.2rem;
+                margin-top: 1.8rem;
+            }
+            h1 {
+                font-size: 1.55rem;
+            }
+            .tagline {
+                font-size: 0.85rem;
+            }
+            .badge {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.75rem;
+            }
+            .promise-item {
+                font-size: 0.8rem;
+                gap: 0.55rem;
+            }
+            .btn {
+                padding: 0.45rem 1.1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* canvas stars — covers exactly wrap area */
+        canvas#stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: block;
+        }
+
+        /* floating elements (responsive size/position) */
+        .float-el {
+            position: absolute;
+            pointer-events: none;
+            animation: floaty linear infinite;
+            will-change: transform, opacity;
+            user-select: none;
+            z-index: 0;
+            text-shadow: 0 0 3px rgba(0,0,0,0.3);
+        }
+
+        @keyframes floaty {
+            0% {
+                transform: translateY(-30px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.9;
+            }
+            85% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(800px) rotate(280deg);
+                opacity: 0;
+            }
+        }
+
+        .divider {
+            width: 160px;
+            max-width: 50%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #6b1a3a, transparent);
+            margin: 1rem auto;
+        }
+
+        .crown {
+            font-size: 2.8rem;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            animation: pulse 2.2s ease-in-out infinite;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            40% {
+                transform: scale(1.12);
+            }
+            70% {
+                transform: scale(1.04);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #e8b4c8;
+            letter-spacing: 0.02em;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #a06080;
+            margin: 0.4rem 0 1.2rem;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .rose-row {
+            display: flex;
+            gap: 0.7rem;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+
+        /* ----- music player — fully responsive flex-wrap if needed ----- */
+        .music-player {
+            background: rgba(25, 4, 18, 0.9);
+            border: 1px solid #5a1a40;
+            border-radius: 20px;
+            padding: 1rem 1.4rem;
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            backdrop-filter: blur(3px);
+        }
+
+        .player-thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #2a0818;
+            border: 1px solid #7a2050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.92rem;
+            color: #f0c0d8;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-artist {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            color: #a06080;
+            margin-bottom: 0.45rem;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .play-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #7a1a45;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.15s;
+            flex-shrink: 0;
+            color: #ffd4e5;
+        }
+
+        .play-btn:hover {
+            background: #a02060;
+            transform: scale(1.06);
+        }
+
+        .play-btn:active {
+            transform: scale(0.97);
+        }
+
+        .progress-wrap {
+            flex: 1;
+            height: 4px;
+            background: #2a0818;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            min-width: 70px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #c04080, #b060d0);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.2s linear;
+        }
+
+        .time-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            color: #b07090;
+            flex-shrink: 0;
+            min-width: 32px;
+            text-align: right;
+        }
+
+        /* main card */
+        .card-main {
+            background: rgba(30, 6, 22, 0.85);
+            border: 1px solid #4a1535;
+            border-radius: 24px;
+            padding: 1.6rem 1.8rem;
+            max-width: 460px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 1.3rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .card-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            color: #cb7ea0;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .msg {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            line-height: 1.9;
+            color: #f0d0de;
+        }
+
+        .msg .name {
+            font-weight: 600;
+            color: #f090b0;
+        }
+
+        .msg .sweet {
+            color: #d0a0c0;
+        }
+
+        .sign {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #b07090;
+            margin-top: 1rem;
+            border-top: 1px solid #2a0e1e;
+            padding-top: 0.9rem;
+        }
+
+        /* badges row — wraps naturally */
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-bottom: 1.3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            background: rgba(80, 10, 45, 0.6);
+            border: 1px solid #5a1a3a;
+            border-radius: 60px;
+            padding: 0.3rem 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            color: #e0a8c0;
+            backdrop-filter: blur(2px);
+        }
+
+        /* promise section */
+        .promise-section {
+            background: rgba(20, 4, 16, 0.8);
+            border: 1px solid #3a0e28;
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            max-width: 460px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 1.4rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .promise-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: #dc88b0;
+            margin-bottom: 0.9rem;
+            text-align: center;
+        }
+
+        .promise-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            margin-bottom: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.84rem;
+            color: #cdb0c0;
+            line-height: 1.45;
+        }
+
+        .promise-dot {
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* buttons row */
+        .btn-row {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            margin-top: 0.3rem;
+        }
+
+        .btn {
+            background: rgba(100, 15, 55, 0.5);
+            border: 1px solid #7a2050;
+            border-radius: 60px;
+            padding: 0.5rem 1.3rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: #f0b0d0;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            backdrop-filter: blur(2px);
+        }
+
+        .btn:hover {
+            background: rgba(150, 20, 75, 0.7);
+            transform: scale(1.04);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .footer {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            color: #5a2a40;
+            margin-top: 1.3rem;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* hidden iframe for youtube api */
+        .youtube-iframe-holder {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            top: -10px;
+            left: -10px;
+        }
+
+        iframe#ytframe {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            top: 0;
+            left: 0;
+        }
+
+        /* prevent overflow on very small screens */
+        @media (max-width: 360px) {
+            .player-controls {
+                gap: 0.4rem;
+            }
+            .progress-wrap {
+                min-width: 50px;
+            }
+            .player-thumb {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem;
+            }
+            .card-main {
+                padding: 1.2rem 1rem;
+            }
+            .promise-section {
+                padding: 1rem 1.2rem;
+            }
+            .msg {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <!-- fonts preload, but we keep import from style -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
 <div class="wrap" id="wrap">
-<canvas id="stars"></canvas>
+    <canvas id="stars"></canvas>
 
-<span class="crown">🖤</span>
-<h1>jan e jahan,<br>I'm so sorry 🌹</h1>
-<p class="tagline">a confession, written under a thousand stars ✨</p>
-<div class="divider"></div>
+    <span class="crown">🖤</span>
+    <h1>jan e jahan,<br>I'm so sorry 🌹</h1>
+    <p class="tagline">a confession, written under a thousand stars ✨</p>
+    <div class="divider"></div>
 
-<div class="rose-row">
-  <span>🌹</span><span>🕯️</span><span>💜</span><span>🕯️</span><span>🌹</span>
+    <div class="rose-row">
+        <span>🌹</span><span>🕯️</span><span>💜</span><span>🕯️</span><span>🌹</span>
+    </div>
+
+    
+
+    <div class="card-main">
+        <p class="card-label">✦ a letter from the heart ✦</p>
+        <p class="msg">
+            Sorry <span class="name">jan e jahan</span> 🌹<br>
+            <span class="sweet">mri rasmalai,</span><br>
+            <span class="sweet">mri khushi ki barfi,</span><br>
+            <span class="sweet">mri jane jahan —</span><br><br>
+            I love you so much it scares me sometimes 💜<br>
+            And I hate that I ever gave you a reason<br>to feel anything but that.<br><br>
+            I Love you.............. 🥀<br>
+            <span style="color:#a06080;font-size:1.1rem">hehehe 🙈</span>
+        </p>
+        <p class="sign">— yours, completely &amp; always 🖤</p>
+    </div>
+
+    <div class="badges">
+        <span class="badge">🌹 mri rasmalai</span>
+        <span class="badge">💜 mri khushi ki barfi</span>
+        <span class="badge">✨ jan e jahan</span>
+    </div>
+
+    <div class="promise-section">
+        <p class="promise-title">🕯️ promises, sealed in the dark 🕯️</p>
+        <div class="promise-item"><span class="promise-dot">🌹</span><span>I promise to be more careful with your heart.</span></div>
+        <div class="promise-item"><span class="promise-dot">💜</span><span>I promise that your smile will always be my favourite thing in the world.</span></div>
+        <div class="promise-item"><span class="promise-dot">🖤</span><span>I promise you are, and will always be, my jan e jahan.</span></div>
+        <div class="promise-item"><span class="promise-dot">✨</span><span>And I promise — hehehe — that I mean every single word 🙈</span></div>
+    </div>
+
+    <div class="btn-row">
+        <div class="btn" id="reminderBtn">🖤 whisper again</div>
+    </div>
+
+    <p class="footer">made at midnight, with love, guilt & too many roses 🥀</p>
 </div>
 
-
-
-<div class="card-main">
-  <p class="card-label">✦ a letter from the heart ✦</p>
-  <p class="msg">
-    Sorry <span class="name">jan e jahan</span> 🌹<br>
-    <span class="sweet">mri rasmalai,</span><br>
-    <span class="sweet">mri khushi ki barfi,</span><br>
-    <span class="sweet">mri jane jahan —</span><br><br>
-    I love you so much it scares me sometimes 💜<br>
-    And I hate that I ever gave you a reason<br>to feel anything but that.<br><br>
-    I Love you.............. 🥀<br>
-    <span style="color:#a06080;font-size:1.1rem">hehehe 🙈</span>
-  </p>
-  <p class="sign">— yours, completely &amp; always 🖤</p>
-</div>
-
-<div class="badges">
-  <span class="badge">🌹 mri rasmalai</span>
-  <span class="badge">💜 mri khushi ki barfi</span>
-  <span class="badge">✨ jan e jahan</span>
-</div>
-
-<div class="promise-section">
-  <p class="promise-title">🕯️ promises, sealed in the dark 🕯️</p>
-  <div class="promise-item"><span class="promise-dot">🌹</span><span>I promise to be more careful with your heart.</span></div>
-  <div class="promise-item"><span class="promise-dot">💜</span><span>I promise that your smile will always be my favourite thing in the world.</span></div>
-  <div class="promise-item"><span class="promise-dot">🖤</span><span>I promise you are, and will always be, my jan e jahan.</span></div>
-  <div class="promise-item"><span class="promise-dot">✨</span><span>And I promise — hehehe — that I mean every single word 🙈</span></div>
-</div>
-
-
-<p class="footer">made at midnight, with love, guilt & too many roses 🥀</p>
-</div>
+<!-- hidden iframe for YouTube API -->
+<iframe id="ytframe" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;top:-10px;left:-10px;" allow="autoplay"></iframe>
 
 <script>
-const canvas = document.getElementById('stars');
-const ctx = canvas.getContext('2d');
-const wrap = document.getElementById('wrap');
+    // --- RESPONSIVE STARS: resize observer also updates stars on window resize
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    const wrapDiv = document.getElementById('wrap');
 
-function resize(){
-  canvas.width = wrap.offsetWidth;
-  canvas.height = wrap.offsetHeight;
-  drawStars();
-}
-function drawStars(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  for(let i=0;i<130;i++){
-    const x=Math.random()*canvas.width, y=Math.random()*canvas.height, r=Math.random()*1.2+.2;
-    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${180+Math.random()*60},${80+Math.random()*60},${150+Math.random()*60},${.15+Math.random()*.5})`;
-    ctx.fill();
-  }
-}
-resize(); setTimeout(resize,400);
-
-const floaters=['🌹','💜','🥀','✨','🖤','💫','🌸','🕯️'];
-for(let i=0;i<16;i++){
-  const el=document.createElement('div');
-  el.className='float-el';
-  el.textContent=floaters[Math.floor(Math.random()*floaters.length)];
-  el.style.left=Math.random()*100+'%';
-  el.style.fontSize=(.8+Math.random()*.9)+'rem';
-  el.style.animationDuration=(7+Math.random()*10)+'s';
-  el.style.animationDelay=(Math.random()*12)+'s';
-  el.style.opacity='0';
-  wrap.appendChild(el);
-}
-
-let yt, playing=false, ticker=null, elapsed=0, duration=30;
-const tag=document.createElement('script');
-tag.src='https://www.youtube.com/iframe_api';
-document.head.appendChild(tag);
-
-window.onYouTubeIframeAPIReady=function(){
-  yt=new YT.Player('ytframe',{
-    videoId:'hhdSyBHuI88',
-    playerVars:{autoplay:0,controls:0,start:0,end:30,modestbranding:1,rel:0},
-    events:{onStateChange:onPlayerState}
-  });
-};
-
-function onPlayerState(e){
-  if(e.data===YT.PlayerState.ENDED||e.data===YT.PlayerState.PAUSED){
-    stopTick();
-    if(e.data===YT.PlayerState.ENDED){elapsed=0;updateBar();document.getElementById('playBtn').textContent='▶';playing=false;}
-  }
-}
-
-function togglePlay(){
-  if(!yt||typeof yt.playVideo!=='function') return;
-  if(!playing){yt.playVideo();playing=true;document.getElementById('playBtn').textContent='⏸';startTick();}
-  else{yt.pauseVideo();playing=false;document.getElementById('playBtn').textContent='▶';stopTick();}
-}
-
-function startTick(){
-  ticker=setInterval(()=>{
-    if(yt&&typeof yt.getCurrentTime==='function'){
-      elapsed=Math.min(yt.getCurrentTime(),duration);
-      updateBar();
-      if(elapsed>=duration){stopTick();playing=false;document.getElementById('playBtn').textContent='▶';}
+    function drawStars() {
+        if (!canvas || !wrapDiv) return;
+        const w = wrapDiv.offsetWidth;
+        const h = wrapDiv.offsetHeight;
+        if (w === 0 || h === 0) return;
+        canvas.width = w;
+        canvas.height = h;
+        ctx.clearRect(0, 0, w, h);
+        // draw random stars - number adapts to area
+        let starCount = Math.floor(Math.min(180, Math.max(80, (w * h) / 3500)));
+        starCount = Math.min(210, starCount);
+        for (let i = 0; i < starCount; i++) {
+            const x = Math.random() * w;
+            const y = Math.random() * h;
+            const r = Math.random() * 1.3 + 0.2;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            const red = 180 + Math.random() * 60;
+            const green = 80 + Math.random() * 60;
+            const blue = 150 + Math.random() * 70;
+            ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, ${0.15 + Math.random() * 0.55})`;
+            ctx.fill();
+        }
     }
-  },300);
-}
-function stopTick(){clearInterval(ticker);}
-function updateBar(){
-  const pct=Math.min((elapsed/duration)*100,100);
-  document.getElementById('progressBar').style.width=pct+'%';
-  const rem=Math.max(0,Math.round(duration-elapsed));
-  document.getElementById('timeLabel').textContent='0:'+String(rem).padStart(2,'0');
-}
-function seekAudio(e){
-  if(!yt||typeof yt.seekTo!=='function') return;
-  const rect=document.getElementById('progressWrap').getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
-  const t=Math.round(pct*duration);
-  elapsed=t; yt.seekTo(t,true); updateBar();
-}
 
-const frame=document.createElement('iframe');
-frame.id='ytframe';
-frame.style.cssText='position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;top:0;left:0';
-frame.allow='autoplay';
-document.getElementById('wrap').appendChild(frame);
+    function handleResizeStars() {
+        drawStars();
+    }
+
+    // resize observer for responsive stars
+    const resizeObserver = new ResizeObserver(() => {
+        drawStars();
+    });
+    if (wrapDiv) resizeObserver.observe(wrapDiv);
+    window.addEventListener('resize', () => { drawStars(); });
+    drawStars();
+    setTimeout(() => drawStars(), 200);
+    setTimeout(() => drawStars(), 600);
+
+    // floating elements: ensure they are inside wrap and responsive, but we also adjust number based on screen width? already 16 elements but they remain ok
+    const floaters = ['🌹', '💜', '🥀', '✨', '🖤', '💫', '🌸', '🕯️'];
+    // remove any pre-existing float elements before adding (just in case, but they are created from fresh)
+    const existingFloats = document.querySelectorAll('.float-el');
+    existingFloats.forEach(el => el.remove());
+
+    for (let i = 0; i < 18; i++) {
+        const el = document.createElement('div');
+        el.className = 'float-el';
+        el.textContent = floaters[Math.floor(Math.random() * floaters.length)];
+        el.style.left = Math.random() * 100 + '%';
+        const size = 0.75 + Math.random() * 1.2;
+        el.style.fontSize = size + 'rem';
+        el.style.animationDuration = (8 + Math.random() * 12) + 's';
+        el.style.animationDelay = (Math.random() * 14) + 's';
+        el.style.opacity = '0';
+        el.style.zIndex = '1';
+        wrapDiv.appendChild(el);
+    }
+
+    // --- YouTube Player + music (same track ID as original)
+    let ytPlayer = null;
+    let playingState = false;
+    let progressInterval = null;
+    const durationTotal = 30; // seconds (end param)
+    let currentTime = 0;
+
+    // load YouTube API
+    const ytScript = document.createElement('script');
+    ytScript.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(ytScript);
+
+    window.onYouTubeIframeAPIReady = function() {
+        const iframe = document.getElementById('ytframe');
+        if (!iframe) return;
+        ytPlayer = new YT.Player('ytframe', {
+            videoId: 'hhdSyBHuI88',       // original melancholic / love theme
+            playerVars: {
+                autoplay: 0,
+                controls: 0,
+                start: 0,
+                end: 30,
+                modestbranding: 1,
+                rel: 0
+            },
+            events: {
+                onStateChange: onPlayerStateChange
+            }
+        });
+    };
+
+    function onPlayerStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+            stopProgressTimer();
+            playingState = false;
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) playBtn.textContent = '▶';
+            currentTime = durationTotal;
+            updateProgressBarUI();
+        } else if (event.data === YT.PlayerState.PAUSED) {
+            stopProgressTimer();
+            playingState = false;
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) playBtn.textContent = '▶';
+        } else if (event.data === YT.PlayerState.PLAYING) {
+            playingState = true;
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) playBtn.textContent = '⏸';
+            startProgressTimer();
+        }
+    }
+
+    function startProgressTimer() {
+        if (progressInterval) clearInterval(progressInterval);
+        progressInterval = setInterval(() => {
+            if (ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
+                let ct = ytPlayer.getCurrentTime();
+                if (ct > durationTotal) ct = durationTotal;
+                currentTime = ct;
+                updateProgressBarUI();
+                if (currentTime >= durationTotal - 0.2) {
+                    // force stop if ended naturally
+                    if (ytPlayer && ytPlayer.getPlayerState && ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+                        // do nothing, but end event will trigger
+                    }
+                }
+            }
+        }, 280);
+    }
+
+    function stopProgressTimer() {
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+    }
+
+    function updateProgressBarUI() {
+        const percent = Math.min((currentTime / durationTotal) * 100, 100);
+        const progBar = document.getElementById('progressBar');
+        if (progBar) progBar.style.width = percent + '%';
+        const timeLabel = document.getElementById('timeLabel');
+        if (timeLabel) {
+            let remain = Math.max(0, durationTotal - Math.floor(currentTime));
+            if (remain < 0) remain = 0;
+            timeLabel.textContent = `0:${remain.toString().padStart(2, '0')}`;
+        }
+    }
+
+    function toggleMusicPlay() {
+        if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
+        if (!playingState) {
+            // if already ended reset to 0
+            if (currentTime >= durationTotal - 0.5) {
+                ytPlayer.seekTo(0);
+                currentTime = 0;
+                updateProgressBarUI();
+            }
+            ytPlayer.playVideo();
+        } else {
+            ytPlayer.pauseVideo();
+        }
+    }
+
+    function seekToPosition(e) {
+        if (!ytPlayer || typeof ytPlayer.seekTo !== 'function') return;
+        const wrapElem = document.getElementById('progressWrap');
+        if (!wrapElem) return;
+        const rect = wrapElem.getBoundingClientRect();
+        let clickX = e.clientX - rect.left;
+        let width = rect.width;
+        if (width <= 0) width = 150;
+        let percent = Math.min(1, Math.max(0, clickX / width));
+        let newTime = percent * durationTotal;
+        if (newTime > durationTotal - 0.1) newTime = durationTotal - 0.2;
+        ytPlayer.seekTo(newTime, true);
+        currentTime = newTime;
+        updateProgressBarUI();
+        // if player is paused, we still update ui
+        if (!playingState && ytPlayer && ytPlayer.getPlayerState && ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+            // nothing else
+        }
+    }
+
+    // event binding after DOM ready
+    document.addEventListener('DOMContentLoaded', () => {
+        const playBtn = document.getElementById('playBtn');
+        if (playBtn) playBtn.addEventListener('click', toggleMusicPlay);
+        const progressWrap = document.getElementById('progressWrap');
+        if (progressWrap) progressWrap.addEventListener('click', seekToPosition);
+
+        // whisper again button: subtle scroll or just resets floating msg? but we add gentle alert effect (romantic)
+        const reminderBtn = document.getElementById('reminderBtn');
+        if (reminderBtn) {
+            reminderBtn.addEventListener('click', () => {
+                // create a subtle floating heart effect + show an apology whisper
+                const whisper = document.createElement('div');
+                whisper.textContent = '💜 I am sorry, jan e jahan... every word stays 💜';
+                whisper.style.position = 'fixed';
+                whisper.style.bottom = '20%';
+                whisper.style.left = '50%';
+                whisper.style.transform = 'translateX(-50%)';
+                whisper.style.backgroundColor = 'rgba(20,4,20,0.9)';
+                whisper.style.color = '#f0b0d0';
+                whisper.style.fontFamily = "'Playfair Display', serif";
+                whisper.style.padding = '0.7rem 1.2rem';
+                whisper.style.borderRadius = '40px';
+                whisper.style.border = '1px solid #7a2050';
+                whisper.style.fontSize = '0.85rem';
+                whisper.style.whiteSpace = 'nowrap';
+                whisper.style.zIndex = '999';
+                whisper.style.backdropFilter = 'blur(8px)';
+                whisper.style.pointerEvents = 'none';
+                whisper.style.fontWeight = '500';
+                document.body.appendChild(whisper);
+                setTimeout(() => {
+                    whisper.style.opacity = '0';
+                    whisper.style.transition = 'opacity 0.9s ease';
+                    setTimeout(() => whisper.remove(), 1000);
+                }, 2100);
+                // also re-affirm with slight pulse on signature
+                const signEl = document.querySelector('.sign');
+                if (signEl) {
+                    signEl.style.transition = 'text-shadow 0.2s';
+                    signEl.style.textShadow = '0 0 6px #e07090';
+                    setTimeout(() => { signEl.style.textShadow = ''; }, 500);
+                }
+            });
+        }
+    });
+
+    // adjust float elements size on orientation change? not needed, but we ensure canvas redraw
+    window.addEventListener('orientationchange', () => { setTimeout(() => drawStars(), 100); });
+    // also ensure that when iframe api loads late, we don't break
+    window.addEventListener('load', () => {
+        drawStars();
+        // re-check player initial label
+        if (document.getElementById('timeLabel')) document.getElementById('timeLabel').innerText = '0:30';
+        if (document.getElementById('progressBar')) document.getElementById('progressBar').style.width = '0%';
+    });
 </script>
+</body>
+</html>
